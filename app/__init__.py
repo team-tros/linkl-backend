@@ -1,19 +1,18 @@
 import json
 import os
-
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 
 from routes.v1 import v1_router
 
-load_dotenv()
+#load_dotenv()
 
-cors_origins = json.loads(os.getenv("origins", '["*"]'))
+cors_origins = ["*"]
 app_config = {
-    "title": "FastAPI Template",
-    "description": "FastAPI Template [GitHub](https://github.com/331leo/FastAPI_Template)",
+    "title": "linkl-backend",
+    "description": "linkl-backend",
     "version": "0.0.1",
     "redoc_url": "/docs/redoc",
     "docs_url": "/docs/swagger",
