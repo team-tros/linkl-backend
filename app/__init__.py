@@ -1,13 +1,12 @@
-import json
-import os
-#from dotenv import load_dotenv
+import logging
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
-
 from routes.v1 import v1_router
 
-#load_dotenv()
+#logging.config.fileConfig('logging.conf', disable_existing_loggers=False)
+#logger = logging.getLogger(__name__)
 
 cors_origins = ["*"]
 app_config = {
@@ -20,11 +19,9 @@ app_config = {
 
 app = FastAPI(**app_config)
 
-
 @app.get("/", include_in_schema=False)
 async def route_root():
     return RedirectResponse(url="/docs/swagger")
-
 
 app.add_middleware(
     CORSMiddleware,
