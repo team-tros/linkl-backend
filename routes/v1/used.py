@@ -24,6 +24,8 @@ async def get_link(link: str):
         raise HTTPException(status_code=404, detail="Link not found")
     """return log list"""
     result = []
+    count = 0
     for i in log:
-        result.append({"ip": i['ip'], "time": i['time']})
+        count = count + 1
+        result.append({"index": count, "time": i['time']})
     return JSONResponse(status_code=200, content={"link": link, "log": result})

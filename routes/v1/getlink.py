@@ -12,7 +12,7 @@ async def get_link(link: str, request: Request):
         mongo_client = motor.motor_asyncio.AsyncIOMotorClient('mongodb://172.30.1.26:27017')
         r = await redis.from_url('redis://localhost:6379/1')
     except Exception as e:
-       return JSONResponse(status_code=500, content={"error": "Internal Server Error"})
+       return JSONResponse(status_code=500, content={"detail": "Internal Server Error"})
     db = mongo_client['linkl']
     collection = db['link']
     collection2 = db['logs']
@@ -22,13 +22,12 @@ async def get_link(link: str, request: Request):
         data = {
             "link": link,
             "time": str(datetime.datetime.now()),
-            "ip":  request.client.host
         }
         await collection2.insert_one(data)
     except Exception as e:
-        return JSONResponse(status_code=500, content={"error": "Internal Server Error"})
+        return JSONResponse(status_code=500, content={"detail": "Internal Server Error"})
     if redirect_link is None:
-        raise HTTPException(status_code=404, detail="Link not found")
+        return JSONResponse(status_code=404, content={"detail": "Link not found"})
     return JSONResponse(status_code=200, content={"link": link, "redirect_link": redirect_link.decode()})
 
 
