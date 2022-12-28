@@ -4,17 +4,10 @@ import redis.asyncio as redis
 import string
 import random
 from fastapi import APIRouter, Request, Depends, HTTPException
-from fastapi.security import OAuth2PasswordBearer
 from starlette import status
 from starlette.responses import JSONResponse
 from models.link import CrateLink
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-
-
-def auth_request(token: str = Depends(oauth2_scheme)) -> bool:
-    authenticated = token == "test_key"
-    return authenticated
 
 create_route = APIRouter()
 
@@ -38,7 +31,7 @@ async def create_link(request: Request, link: CrateLink):
         return JSONResponse(status_code=500, content={"detail": "Internal Server Error"})
     db = mongo_client["linkl"]
     collection = db["link"]
-    if original_link == "" or None:
+    if original_link == None:
         while True:
             original_link = "".join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(9))
             if await collection.find_one({"link": original_link}) is None:
