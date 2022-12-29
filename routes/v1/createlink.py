@@ -31,7 +31,7 @@ async def create_link(request: Request, link: CrateLink):
         return JSONResponse(status_code=500, content={"detail": "Internal Server Error"})
     db = mongo_client["linkl"]
     collection = db["link"]
-    if original_link == "" or None:
+    if original_link == "null":
         while True:
             original_link = "".join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(9))
             if await collection.find_one({"link": original_link}) is None:
