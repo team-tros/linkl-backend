@@ -21,7 +21,7 @@ httpx = "^0.23.1"
 uvloop = "^0.17.0"
 
 [tool.poetry.dev-dependencies]
-black = "^21.9b0"
+black = "^23.1a1"
 isort = "^5.9.3"
 
 [build-system]
