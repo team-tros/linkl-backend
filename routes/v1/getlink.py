@@ -10,7 +10,7 @@ getlink_route = APIRouter()
 async def get_link(link: str, request: Request):
     try:
         mongo_client = motor.motor_asyncio.AsyncIOMotorClient('mongodb://172.30.1.26:27017')
-        r = await redis.from_url('redis://localhost:6379/1')
+        r = await redis.from_url('redis://172.30.1.26:6379/1')
     except Exception as e:
        return JSONResponse(status_code=500, content={"detail": "Internal Server Error"})
     db = mongo_client['linkl']
